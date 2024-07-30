@@ -1,56 +1,64 @@
 try:
-    from datetime import datetime, timedelta, timezone
+    import time
+    import datetime
     import automationassets
     from azure.identity import DefaultAzureCredential
     from azure.mgmt.compute import ComputeManagementClient
-    from azure.mgmt.resource import ResourceManagementClient
     from msrestazure.azure_cloud import AZURE_US_GOV_CLOUD
-
     print('import(s) working ..\n')
 except Exception as e:
     print(f'Importing error: {e}{repr(e)}')
 
+
 try:
     sub_id = automationassets.get_automation_variable('AZURE_SUB_ID')
-    snapshot_expire_in_days = automationassets.get_automation_variable('SNAP_EXPIRE_THRESHOLD')
+    rg_name = automationassets.get_automation_variable('VM_RG_NAME')
+    vms_to_snap = automationassets.get_automation_variable('VM_NAMES')
 except Exception as e:
     print(f'Variable import error: {e}{repr(e)}')
 
 
-def list_vm_snapshots(sub_id):
+try:
+    vm_list = [vm.strip() for vm in vms_to_snap.split(',')]
+except Exception as e:
+    print(f'Vm list creation error: {e}{repr(e)}')
+
+
+def take_vm_snapshot(sub_id, rg_name, vm_name, snapshot_name):
+    # print(AZURE_US_GOV_CLOUD.endpoints.resource_manager)
     credential = DefaultAzureCredential(authority=AZURE_US_GOV_CLOUD.endpoints.active_directory)
     compute_client = ComputeManagementClient(
         credential,
         sub_id,
         base_url=AZURE_US_GOV_CLOUD.endpoints.resource_manager,
-        credential_scopes=[AZURE_US_GOV_CLOUD.endpoints.resource_manager + '/.default']
+        credential_scopes=[AZURE_US_GOV_CLOUD.endpoints.resource_manager + "/.default"]
+        )
+
+    vm = compute_client.virtual_machines.get(rg_name, vm_name)
+
+    snapshot_properties = {
+        'location': vm.location,
+        'creation_data': {
+            'create_option': 'Copy',
+            'source_uri': vm.storage_profile.os_disk.managed_disk.id
+        }
+    }
+    snapshot_async_operation = compute_client.snapshots.begin_create_or_update(
+        rg_name,
+        snapshot_name,
+        snapshot_properties
     )
-    resource_client = ResourceManagementClient(
-        credential,
-        sub_id,
-        base_url=AZURE_US_GOV_CLOUD.endpoints.resource_manager,
-        credential_scopes=[AZURE_US_GOV_CLOUD.endpoints.resource_manager + '/.default']
-    )
-
-    list_resource_groups = resource_client.resource_groups.list()
-
-    for resource_group in list_resource_groups:
-        snapshots = compute_client.snapshots.list_by_resource_group(resource_group.name)
-        now_utc = datetime.now(timezone.utc)
-        for snapshot in snapshots:
-            snap_time_utc = snapshot.time_created.astimezone(timezone.utc)
-            if now_utc - snap_time_utc > timedelta(days=snapshot_expire_in_days):
-                delete_snap(compute_client, resource_group.name, snapshot.name)
-            else:
-                print(f'Snapshot not expired, skipping: {snapshot.name}. Snapshot age: {now_utc - snap_time_utc}')
+    snapshot_result = snapshot_async_operation.result()
+    print("Snapshot created: ", snapshot_result.name)
 
 
-def delete_snap(compute_client, resource_group_name, snapshot_name):
-    compute_client.snapshots.begin_delete(resource_group_name, snapshot_name)
-    print(f'Snapshot deleted: {snapshot_name}')
+time_now = datetime.datetime.now()
+time_format = time_now.strftime('%m-%d-%Y_%H-%M-%S')
 
 
 try:
-    list_vm_snapshots(sub_id)
+    for vm in vm_list:
+        snapshot_name = f'{vm}-{time_format}_snap'
+        take_vm_snapshot(sub_id, rg_name, vm, snapshot_name)
 except Exception as e:
-    print(f'{e}{repr(e)}')
+    print(f'Snapshot error: {e}{repr(e)}')
