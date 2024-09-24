@@ -1,4 +1,4 @@
-# Runbooks for snapshot automation/expiration 
+# Runbooks for automated snapshot creation & expiration 
 
 #### Requirements:
 * Azure automation account
@@ -6,8 +6,7 @@
 * Associated python libraries
 
 ###### ToDo's :
-###### Create terraform IaC for deployment.
-###### Use diffrent method to capture vm names for snapshot creation, currently using an env. variable .
+* Use different method to capture vm names for snapshot creation, currently using an env. variable .
 
 #### What does it do?:
 Creates two python runbooks under an automation account 
