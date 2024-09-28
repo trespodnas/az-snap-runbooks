@@ -1,5 +1,7 @@
 # Runbooks for automated snapshot creation & expiration 
 
+
+* Currently only scoped to run on azure gov
 #### Requirements:
 * Azure automation account
 * Managed Identity
