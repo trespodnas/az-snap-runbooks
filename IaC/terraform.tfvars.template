@@ -1,0 +1,59 @@
+subscription_id         = ""
+resource_group_name     = ""
+resource_group_location = ""
+resource_group_tags = {
+  "environment" = "automation account"
+  "deployment"  = "snapshot creation/expiration runbooks"
+}
+automation_account_name = ""
+packages = [
+  {
+    name           = "azure-core"
+    content_uri    = "https://files.pythonhosted.org/packages/b0/71/1d1bb387b6acaa5daa3e703c70dde3d54823ccd229bd6730de6e724f296e/azure_identity-1.18.0-py3-none-any.whl"
+    hash_algorithm = "sha256"
+    hash_value     = "22954de3777e0250029360ef31d80448ef1be13b80a459bff80ba7073379e2cd"
+  },
+  {
+    name           = "azure-identity"
+    content_uri    = "https://files.pythonhosted.org/packages/30/10/5dbf755b368d10a28d55b06ac1f12512a13e88874a23db82defdea9a8cd9/azure_identity-1.15.0-py3-none-any.whl"
+    hash_algorithm = "sha256"
+    hash_value     = "bccf6106245b49ff41d0c4cd7b72851c5a2ba3a32cef7589da246f5727f26f02"
+  },
+  {
+    name           = "azure-mgmt-compute"
+    content_uri    = "https://files.pythonhosted.org/packages/90/e6/3a012b49e83e2579d2f771613303aa301b675f3db03541381cd1d823216f/azure_mgmt_compute-33.0.0-py3-none-any.whl"
+    hash_algorithm = "sha256"
+    hash_value     = "155f8d78a1fdedcea1725fd12b85b2d87fbcb6b53f8e77451c644f45701e3bcf"
+  },
+  {
+    name           = "azure-mgmt-core"
+    content_uri    = "https://files.pythonhosted.org/packages/b1/5a/3a31578b840600dffb75f3ffb383cc4c5e8ea0d06a1085f86b17e18c3193/azure_mgmt_core-1.4.0-py3-none-any.whl"
+    hash_algorithm = "sha256"
+    hash_value     = "81071675f186a585555ef01816f2774d49c1c9024cb76e5720c3c0f6b337bb7d"
+  },
+  {
+    name           = "azure-mgmt-msi"
+    content_uri    = "https://files.pythonhosted.org/packages/6d/a7/49c140940651d4f4209e2bbdd6e639134b7cf4354ef44e287796f3eac32a/azure_mgmt_msi-7.0.0-py3-none-any.whl"
+    hash_algorithm = "sha256"
+    hash_value     = "bbec45bbaa021cb935a1b84f94e160841722a8073d193783e7f458ba476fbc56"
+  },
+  {
+    name           = "azure-mgmt-resource"
+    content_uri    = "https://files.pythonhosted.org/packages/73/26/1e0aa521832b6833e6ed81481bc9044a5812418deeaa86e99e6850e234f4/azure_mgmt_resource-23.1.1-py3-none-any.whl"
+    hash_algorithm = "sha256"
+    hash_value     = "fcaa4eca357d216f285b04e20b7f7bfaefda738ba6d30d956193090d3e325248"
+  },
+  {
+    name           = "msal"
+    content_uri    = "https://files.pythonhosted.org/packages/cd/40/0a5d743484e1ad00493bdffa8d10d7dbc6a51fec95290ad396e47e79fa43/msal-1.31.0-py3-none-any.whl"
+    hash_algorithm = "sha256"
+    hash_value     = "96bc37cff82ebe4b160d5fc0f1196f6ca8b50e274ecd0ec5bf69c438514086e7"
+  },
+  {
+    name           = "typing-extensions"
+    content_uri    = "https://files.pythonhosted.org/packages/26/9f/ad63fc0248c5379346306f8668cda6e2e2e9c95e01216d2b8ffd9ff037d0/typing_extensions-4.12.2-py3-none-any.whl"
+    hash_algorithm = "sha256"
+    hash_value     = "04e5ca0351e0f3f85c6853954072df659d0d13fac324d0072316b67d7794700d"
+  },
+]
+

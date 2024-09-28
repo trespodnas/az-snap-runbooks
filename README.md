@@ -2,6 +2,7 @@
 
 #### Requirements:
 * Azure automation account
+* Managed Identity
 * Python = 3.8 > 
 * Associated python libraries
 
@@ -11,7 +12,7 @@
 #### What does it do?:
 Creates two python runbooks under an automation account 
 Takes scheduled snapshots of named vm's <br>
-Expires/removes all snapshots in subscription after set threshold, which is set via SNAP_EXPIRE_THRESHOLD variable.
+Expires/removes all snapshots in subscription after set threshold (set via SNAP_EXPIRE_THRESHOLD env. variable).
 
 #### Getting started:
 * Clone this repo./copy to your environment<br>
