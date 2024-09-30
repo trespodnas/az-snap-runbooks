@@ -33,9 +33,6 @@ Expires/removes all snapshots in subscription after set threshold (set via SNAP_
    * azure_mgmt_resource
    * msal
    * typing_extensions
-* Create schedules
-* Attach schedules to each runbook
-* TEST
 * Python is wrapped in try/excepts which will aid in troubleshooting, check the runbooks job output for details/output
 
 
