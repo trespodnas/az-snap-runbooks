@@ -34,7 +34,7 @@ Expires/removes all snapshots in subscription after set threshold
 * Edit the "create_snapshot_schedule" (day/time) to suit your needs, by default it runs Mon/Wed/Fri.
 * Edit the "expire_snapshot_schedule", by default it runs monthly on the 1st
 
-##### Notes:
+#### Notes:
 * Snapshot expiration is scoped to the whole subscription 
 * Snapshots are scoped to resource group
 * The following automation account variables are set:
